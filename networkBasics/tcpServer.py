@@ -33,4 +33,4 @@ while True:
 
     # spin up the client thread to handle incoming data and pass it the client object
     client_handler = threading.Thread(target=handle_client,args=(client,))
-    client_handler.start()
+    client_handler.start()start
