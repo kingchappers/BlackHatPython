@@ -52,10 +52,11 @@ try:
     chan.send('Welcome to bh_ssh')
     while True:
         try:
-            command = raw_input("Enter command: ").strip('\n')
+            command = input("Enter command: ").strip('\n')
             if command != 'exit':
                 chan.send(command)
-                print(chan.recv(1024 + '\n'))
+ 
+                print(chan.recv(1024) + b'\n')
             else:
                 chan.send('exit')
                 print('exiting')
@@ -70,4 +71,3 @@ except Exception as e:
     except:
         pass
     sys.exit(1)
-    

@@ -28,4 +28,4 @@ def ssh_command(ip, user, passwd, command):
     
     return
 
-ssh_command('192.168.1.98', 'sam', 'myPassword', 'ClientConnected')
+ssh_command('localhost', 'sam', 'myPassword', 'ClientConnected')
