@@ -18,3 +18,5 @@ def ssh_command(ip, user, passwd, command):
         print(ssh_session.recv(1024))
 
     return
+
+ssh_command('192.168.1.98', 'sam', 'myPassword', 'id')
