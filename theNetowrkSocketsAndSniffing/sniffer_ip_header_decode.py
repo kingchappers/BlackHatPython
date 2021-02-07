@@ -8,7 +8,7 @@ from ctypes import *
 #host to listen on - set this to the current IP
 host = "192.168.1.98"
 
-#IP header
+#Map the first 20 bytes into a friendly IP header
 class IP(Structure):
     _fields_ = [
         ("ihl", c_ubyte, 4),
