@@ -3,7 +3,7 @@
 import socket
 import os
 
-#host to listen on
+#host to listen on - set this to the current IP
 host = "192.168.1.98"
 
 #create a raw socket and bind it to the public interface
