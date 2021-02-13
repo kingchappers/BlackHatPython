@@ -15,16 +15,19 @@ host = "192.168.1.98"
 subnet = "192.168.1.0/24"
 
 #magic string we'll check ICMP responses for
-magic_message = "PYTHONRULES!"
+magic_message = b"PYTHONRULES!"
 
 #spray out UDP datagrams
 def udp_sender(subnet, magic_message):
     time.sleep(5)
     sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+    #enables broadcast mode - without this there will be permission denied error when scanning as by default broadcast activity is blocked
+    sender.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+
     for ip in IPNetwork(subnet):
         try:
-            sender.sendto(magic_message.encode('utf-8'),("%s" % ip,65212))
+            sender.sendto(magic_message,("%s" % ip,65212))
         except Exception as e:
             print(e)
             pass
