@@ -4,6 +4,7 @@ from scapy.all import *
 
 #packet callback
 def packet_callback(packet):
+    #TCP seems to be triggoring pylint errors. It works!
     if packet[TCP].payload:
         mail_packet = str(packet[TCP].payload)
 
