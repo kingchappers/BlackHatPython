@@ -19,7 +19,7 @@ def restore_target(gateway_ip, gateway_mac, target_ip, target_mac):
 
 def get_mac(ip_address):
     #ARP request for the targets MAC address
-    reponses, unanswered = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip_address), timeout=2, retry=10)
+    responses, unanswered = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip_address), timeout=2, retry=10)
 
     #return the MAC address from a response
     for s,r in responses:
@@ -56,7 +56,7 @@ def poison_target(gateway_ip, gateway_mac, target_ip, target_mac):
 
 
 #My interface
-interface = "enp56s0ulu4"
+interface = "enp56s0u1u4"
 #target device IP
 target_ip = "192.168.1.35"
 #gateway machine
@@ -108,4 +108,3 @@ except KeyboardInterrupt:
     #Restort the network
     restore_target(gateway_ip, gateway_mac, target_ip, target_mac)
     sys.exit(0)
-
