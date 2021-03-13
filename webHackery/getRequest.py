@@ -4,4 +4,4 @@ import urllib.request
 
 body = urllib.request.urlopen("http://samchapman.dev")
 
-print(body.read)
+print(body.read())
