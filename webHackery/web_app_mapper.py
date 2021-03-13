@@ -10,8 +10,8 @@ threads = 10
 
 #define the target website and the directory we've downloaded the web application to 
 
-target = "http://www.blackhatpython.com"
-directory = "~/Downloads/joomla-3.1.1"
+target = "http://samchapman.dev"
+directory = "~/Documents/devBlog"
 #file extensions we don't want to fingerprint
 filters = [".jpg", ".gif", ".png", ".css"]
 
@@ -31,8 +31,10 @@ for r,d,f in os.walk("."):
         if os.path.splitext(files)[1] not in filters:
             web_paths.put(remote_path)
 
+#Loop through until the queue is empty
 def test_remote():
     while not web_paths.empty:
+        #Grab a path from the queue and try to retrieve it
         path = web_paths.get()
         url = "%s%s" % (target, path)
 
@@ -48,8 +50,10 @@ def test_remote():
         except urllib.request.HTTPError as error:
             print("Failed %s" % error.code)
             pass
-    
-    for i in range(threads):
-        print("Spawning thread: %d" % i)
-        t = threading.Thread(target = test_remote)
-        t.start()
+
+#Create threads as per the threads set at the top    
+#The threads call the test_remote function
+for i in range(threads):
+    print("Spawning thread: %d" % i)
+    t = threading.Thread(target = test_remote)
+    t.start()
