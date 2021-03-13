@@ -11,7 +11,7 @@ threads = 10
 #define the target website and the directory we've downloaded the web application to 
 
 target = "http://samchapman.dev"
-directory = "~/Documents/devBlog"
+directory = "/home/sam/Documents/devBlog"
 #file extensions we don't want to fingerprint
 filters = [".jpg", ".gif", ".png", ".css"]
 
